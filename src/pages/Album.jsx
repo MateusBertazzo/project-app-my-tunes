@@ -8,7 +8,7 @@ class Album extends Component {
   state = {
     musics: [],
     artistName: '',
-    albumName: '',
+    collectionName: '',
   };
 
   componentDidMount() {
@@ -19,27 +19,28 @@ class Album extends Component {
     const { match } = this.props;
     const { id } = match.params;
     // console.log(id);
+
     this.setState({}, async () => {
       const fetchMusic = await getMusics(id);
       // console.log(fetchMusic);
       this.setState({
         musics: fetchMusic,
         artistName: fetchMusic[0].artistName,
-        albumName: fetchMusic[0].albumName,
+        collectionName: fetchMusic[0].collectionName,
       });
     });
   };
 
   render() {
-    const { musics, artistName, albumName } = this.state;
+    const { musics, artistName, collectionName } = this.state;
     return (
       <div>
         <Header />
         <div data-testid="page-album">
           <p data-testid="artist-name">{artistName}</p>
-          <p data-testid="album-name">{albumName}</p>
+          <p data-testid="album-name">{collectionName}</p>
           {musics.map((music) => (
-            <div key={ music.trackId }>
+            <div key={ `${music.trackId} ${music.trackName}` }>
               {music.previewUrl !== undefined && <MusicCard
                 trackName={ music.trackName }
                 previewUrl={ music.previewUrl }
