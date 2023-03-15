@@ -44,6 +44,7 @@ class Album extends Component {
               {music.previewUrl !== undefined && <MusicCard
                 trackName={ music.trackName }
                 previewUrl={ music.previewUrl }
+                trackId={ music.trackId }
               />}
             </div>
           ))}
