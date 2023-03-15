@@ -10,7 +10,7 @@ class MusicCard extends Component {
     favoritArrayMusic: [],
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     this.setState({
       loading: true,
     }, async () => {
@@ -18,9 +18,21 @@ class MusicCard extends Component {
       this.setState({
         loading: false,
         favoritArrayMusic: arrayMusic,
-      });
+      }, () => this.checkMusic());
     });
   }
+
+  checkMusic = () => {
+    const { favoritArrayMusic } = this.state;
+    const { trackId } = this.props;
+    favoritArrayMusic.forEach((index) => {
+      if (index.trackId === trackId) {
+        this.setState({
+          checked: true,
+        });
+      }
+    });
+  };
 
   saveMusic = () => {
     this.setState({
@@ -37,9 +49,8 @@ class MusicCard extends Component {
   };
 
   render() {
-    const { loading, checked, favoritArrayMusic } = this.state;
+    const { loading, checked } = this.state;
     const { trackName, previewUrl, trackId } = this.props;
-    console.log(favoritArrayMusic);
     const cardMusic = (
       <div>
         <p>{ trackName }</p>
